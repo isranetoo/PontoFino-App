@@ -4,7 +4,7 @@
     "slug": "PontoFino-App",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon_pontofino.png",
     "scheme": "pontofinoapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

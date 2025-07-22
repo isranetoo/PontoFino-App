@@ -17,7 +17,6 @@ export default function RootLayout() {
   const logout = () => setIsLoggedIn(false);
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 
@@ -30,6 +29,10 @@ export default function RootLayout() {
           ) : (
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           )}
+
+          {/* 👇 Adicione esta linha para esconder o título da tela de registro */}
+          <Stack.Screen name="register" options={{ headerShown: false }} />
+
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />

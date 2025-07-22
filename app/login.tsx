@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
-import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Button, Image, Keyboard, StyleSheet, TextInput, View } from 'react-native';
 import { AuthContext } from '../contexts/auth-context';
 
 export default function LoginScreen() {
@@ -17,6 +17,7 @@ export default function LoginScreen() {
       setError('Preencha todos os campos.');
       return;
     }
+    Keyboard.dismiss();
     Alert.alert('Login', `Bem-vindo, ${email}!`);
     setError('');
     login();
@@ -25,11 +26,12 @@ export default function LoginScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Entrar</ThemedText>
+      <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
+      <ThemedText type="title" style={styles.title}>Entrar</ThemedText>
       <TextInput
         style={styles.input}
         placeholder="E-mail"
-        placeholderTextColor="#111"
+        placeholderTextColor="#1976D2"
         autoCapitalize="none"
         keyboardType="email-address"
         value={email}
@@ -38,15 +40,17 @@ export default function LoginScreen() {
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#111"
+        placeholderTextColor="#1976D2"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
-      <Button title="Entrar" onPress={handleLogin} />
-      <View style={{ marginTop: 16 }}>
-        <Button title="Registrar-se" onPress={() => router.replace('/register')} />
+      <View style={styles.buttonContainer}>
+        <Button title="Entrar" color="#1976D2" onPress={handleLogin} />
+      </View>
+      <View style={styles.secondaryButtonContainer}>
+        <Button title="Registrar-se" color="#64B5F6" onPress={() => router.replace('/register')} />
       </View>
     </ThemedView>
   );
@@ -56,20 +60,54 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 32,
     gap: 16,
+    backgroundColor: '#E3F2FD',
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 24,
+    resizeMode: 'contain',
+  },
+  title: {
+    color: '#1976D2',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 16,
+    textAlign: 'center',
   },
   input: {
     height: 48,
-    borderColor: '#ccc',
-    borderWidth: 1,
+    width: '100%',
+    maxWidth: 350,
+    borderColor: '#1976D2',
+    borderWidth: 1.5,
     borderRadius: 8,
     paddingHorizontal: 12,
-    marginBottom: 8,
+    marginBottom: 12,
     backgroundColor: '#fff',
+    color: '#1976D2',
+    fontSize: 16,
   },
   error: {
-    color: 'red',
+    color: '#D32F2F',
     marginBottom: 8,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    maxWidth: 350,
+    marginTop: 8,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  secondaryButtonContainer: {
+    width: '100%',
+    maxWidth: 350,
+    marginTop: 16,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 });

@@ -1,8 +1,10 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { AuthButton } from '@/components/ui/AuthButton';
+import { AuthSection } from '@/components/ui/AuthSection';
 import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
-import { Alert, Button, Image, Keyboard, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Image, Keyboard, StyleSheet, TextInput } from 'react-native';
 import { AuthContext } from '../contexts/auth-context';
 
 export default function LoginScreen() {
@@ -27,31 +29,31 @@ export default function LoginScreen() {
   return (
     <ThemedView style={styles.container}>
       <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
-      <ThemedText type="title" style={styles.title}>Entrar</ThemedText>
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="#1976D2"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#1976D2"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
-      <View style={styles.buttonContainer}>
-        <Button title="Entrar" color="#1976D2" onPress={handleLogin} />
-      </View>
-      <View style={styles.secondaryButtonContainer}>
-        <Button title="Registrar-se" color="#64B5F6" onPress={() => router.replace('/register')} />
-      </View>
+      <ThemedText type="title" style={styles.title}>Bem-vindo de volta</ThemedText>
+      <AuthSection>
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          placeholderTextColor="#1976D2"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#1976D2"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+      </AuthSection>
+      <AuthSection style={styles.buttonContainer}>
+        <AuthButton title="Entrar" color="#1976D2" icon="house.fill" onPress={handleLogin} />
+        <AuthButton title="Registrar-se" color="#64B5F6" icon="paperplane.fill" onPress={() => router.replace('/register')} />
+      </AuthSection>
     </ThemedView>
   );
 }

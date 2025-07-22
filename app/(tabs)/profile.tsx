@@ -1,23 +1,24 @@
+
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ProfileAvatar } from '@/components/ui/ProfileAvatar';
+import { ProfileButton } from '@/components/ui/ProfileButton';
+import { ProfileSection } from '@/components/ui/ProfileSection';
+import { AuthContext } from '@/contexts/auth-context';
 import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { AuthContext } from '../../contexts/auth-context';
+import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+
 
 export default function ProfileScreen() {
-  // Mock: dados do usuário
   const [email, setEmail] = useState('usuario@email.com');
   const [username, setUsername] = useState('usuario123');
   const [photo, setPhoto] = useState('https://i.pravatar.cc/150?img=3');
   const { logout } = useContext(AuthContext);
   const router = useRouter();
 
-  // Função para salvar as alterações do usuário
   const handleSave = () => {
-    // Aqui você pode implementar a lógica de salvar (API, contexto, etc)
-    // Exemplo: alert para feedback
-    alert('Informações salvas com sucesso!');
+    Alert.alert('Sucesso', 'Informações salvas com sucesso!');
   };
 
   const handleLogout = () => {
@@ -29,14 +30,11 @@ export default function ProfileScreen() {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <ThemedView style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
+          <ProfileAvatar uri={photo} onEdit={() => Alert.alert('Alterar foto', 'Funcionalidade em breve!')} />
         </View>
-        <ThemedText type="title" style={styles.title}>Perfil do Usuário</ThemedText>
-        <View style={styles.avatarContainer}>
-          <Image source={{ uri: photo }} style={styles.avatar} />
-          <Button title="Alterar foto" color="#1976D2" onPress={() => {}} />
-        </View>
-        <View style={styles.infoContainer}>
+        <ThemedText type="title" style={styles.title}>Olá, {username} 👋</ThemedText>
+
+        <ProfileSection>
           <ThemedText type="subtitle" style={styles.label}>Nome de usuário</ThemedText>
           <TextInput
             style={styles.input}
@@ -55,13 +53,14 @@ export default function ProfileScreen() {
             autoCapitalize="none"
             placeholderTextColor="#1976D2"
           />
-        </View>
-        <View style={styles.buttonGroup}>
-          <Button title="Salvar" color="#388E3C" onPress={handleSave} />
-          <Button title="Configurações" color="#64B5F6" onPress={() => {}} />
-          <Button title="Preferências" color="#90CAF9" onPress={() => {}} />
-          <Button title="Sair" color="#d32f2f" onPress={handleLogout} />
-        </View>
+        </ProfileSection>
+
+        <ProfileSection style={styles.buttonGroup}>
+          <ProfileButton title="Salvar" color="#388E3C" icon="chevron.left.forwardslash.chevron.right" onPress={handleSave} />
+          <ProfileButton title="Configurações" color="#64B5F6" icon="house.fill" onPress={() => Alert.alert('Configurações', 'Funcionalidade em breve!')} />
+          <ProfileButton title="Preferências" color="#90CAF9" icon="chevron.right" onPress={() => Alert.alert('Preferências', 'Funcionalidade em breve!')} />
+          <ProfileButton title="Sair" color="#d32f2f" icon="paperplane.fill" onPress={handleLogout} />
+        </ProfileSection>
       </ThemedView>
     </ScrollView>
   );

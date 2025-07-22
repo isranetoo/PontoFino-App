@@ -1,8 +1,10 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { AuthButton } from '@/components/ui/AuthButton';
+import { AuthSection } from '@/components/ui/AuthSection';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Button, Image, Keyboard, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Image, Keyboard, StyleSheet, TextInput } from 'react-native';
 
 export default function RegisterScreen() {
   const [username, setUsername] = useState('');
@@ -30,46 +32,46 @@ export default function RegisterScreen() {
   return (
     <ThemedView style={styles.container}>
       <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
-      <ThemedText type="title" style={styles.title}>Registrar-se</ThemedText>
-      <TextInput
-        style={styles.input}
-        placeholder="Nome de usuário"
-        placeholderTextColor="#1976D2"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        placeholderTextColor="#1976D2"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#1976D2"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmar senha"
-        placeholderTextColor="#1976D2"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-      {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
-      <View style={styles.buttonContainer}>
-        <Button title="Registrar" color="#1976D2" onPress={handleRegister} />
-      </View>
-      <View style={styles.secondaryButtonContainer}>
-        <Button title="Voltar para Login" color="#64B5F6" onPress={() => router.replace('/login')} />
-      </View>
+      <ThemedText type="title" style={styles.title}>Crie sua conta</ThemedText>
+      <AuthSection>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome de usuário"
+          placeholderTextColor="#1976D2"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          placeholderTextColor="#1976D2"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#1976D2"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmar senha"
+          placeholderTextColor="#1976D2"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+      </AuthSection>
+      <AuthSection style={styles.buttonContainer}>
+        <AuthButton title="Registrar-se" color="#388E3C" icon="chevron.left.forwardslash.chevron.right" onPress={handleRegister} />
+        <AuthButton title="Voltar para login" color="#64B5F6" icon="house.fill" onPress={() => router.replace('/login')} />
+      </AuthSection>
     </ThemedView>
   );
 }
@@ -121,17 +123,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-
-  secondaryButtonContainer: {
-    width: '100%',
-    maxWidth: 350,
-    marginTop: 16,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  
 });
-export const options = {
-  headerShown: false,
-};
 

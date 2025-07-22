@@ -1,5 +1,6 @@
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { ThemeProvider as RNEUIThemeProvider, createTheme } from '@rneui/themed';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -20,23 +21,41 @@ export default function RootLayout() {
     return null;
   }
 
+  const rneuiTheme = createTheme({
+    lightColors: {
+      primary: '#1976D2',
+      success: '#43A047',
+      background: '#fff',
+      white: '#fff',
+    },
+    darkColors: {
+      primary: '#1976D2',
+      success: '#43A047',
+      background: '#121212',
+      white: '#fff',
+    },
+    mode: colorScheme === 'dark' ? 'dark' : 'light',
+  });
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          {!isLoggedIn ? (
-            <Stack.Screen name="login" options={{ headerShown: false }} />
-          ) : (
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          )}
+      <RNEUIThemeProvider theme={rneuiTheme}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            {!isLoggedIn ? (
+              <Stack.Screen name="login" options={{ headerShown: false }} />
+            ) : (
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            )}
 
-          {/* 👇 Adicione esta linha para esconder o título da tela de registro */}
-          <Stack.Screen name="register" options={{ headerShown: false }} />
+            {/* 👇 Adicione esta linha para esconder o título da tela de registro */}
+            <Stack.Screen name="register" options={{ headerShown: false }} />
 
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </RNEUIThemeProvider>
     </AuthContext.Provider>
   );
 }

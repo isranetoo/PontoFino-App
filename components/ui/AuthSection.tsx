@@ -1,8 +1,16 @@
+// Exemplos de ícones válidos para family 'material' do rneui/themed:
+// home, send, chevron-left, chevron-right, edit, account-circle, account-balance-wallet, person, lock, visibility, visibility-off, email, logout, settings, info, help, star, favorite, attach-money, trending-up, trending-down
+// Consulte https://mui.com/material-ui/material-icons/ para mais opções
+import { Card } from '@rneui/themed';
 import { ReactNode } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 export function AuthSection({ children, style }: { children: ReactNode; style?: ViewStyle }) {
-  return <View style={[styles.section, style]}>{children}</View>;
+  return (
+    <Card containerStyle={[styles.section, style]}>
+      {children}
+    </Card>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -18,5 +26,6 @@ const styles = StyleSheet.create({
     maxWidth: 350,
     width: '100%',
     alignSelf: 'center',
+    backgroundColor: '#fff',
   },
 });

@@ -1,13 +1,17 @@
+import { Card } from '@rneui/themed';
 import { ReactNode } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 export function ProfileSection({ children, style }: { children: ReactNode; style?: ViewStyle }) {
-  return <View style={[styles.section, style]}>{children}</View>;
+  return (
+    <Card containerStyle={[styles.section, style]}>
+      {children}
+    </Card>
+  );
 }
 
 const styles = StyleSheet.create({
   section: {
-    backgroundColor: '#fff',
     borderRadius: 16,
     padding: 18,
     marginVertical: 10,
@@ -19,5 +23,6 @@ const styles = StyleSheet.create({
     maxWidth: 350,
     width: '100%',
     alignSelf: 'center',
+    backgroundColor: '#fff',
   },
 });

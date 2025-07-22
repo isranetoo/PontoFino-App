@@ -1,37 +1,41 @@
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Avatar, Badge, Icon } from '@rneui/themed';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-export function ProfileAvatar({ uri, onEdit }: { uri: string; onEdit: () => void }) {
+export function ProfileAvatar({ uri, onEdit, style }: { uri: string; onEdit: () => void; style?: ViewStyle }) {
   return (
-    <View style={styles.container}>
-      <Image source={{ uri }} style={styles.avatar} />
-      <TouchableOpacity style={styles.editButton} onPress={onEdit} activeOpacity={0.8}>
-        <IconSymbol name="paperplane.fill" size={22} color="#fff" />
-      </TouchableOpacity>
-    </View>
+    <Avatar
+      size={120}
+      rounded
+      source={{ uri }}
+      containerStyle={[styles.avatar, style]}
+    >
+      <Badge
+        value={<Icon name="edit" type="material" color="#fff" size={20} />}
+        status="primary"
+        containerStyle={styles.badgeContainer}
+        badgeStyle={styles.badge}
+        onPress={onEdit}
+      />
+    </Avatar>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-  },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
     borderWidth: 3,
     borderColor: '#1976D2',
     backgroundColor: '#E3F2FD',
+    alignSelf: 'center',
   },
-  editButton: {
+  badgeContainer: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
+    bottom: 6,
+    right: 6,
+    zIndex: 2,
+  },
+  badge: {
     backgroundColor: '#1976D2',
-    borderRadius: 20,
+    borderRadius: 16,
     padding: 6,
     elevation: 4,
   },

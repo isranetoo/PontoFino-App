@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
-import { Button, Image, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Image, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth-context';
 
 export default function ProfileScreen() {
@@ -13,47 +13,57 @@ export default function ProfileScreen() {
   const { logout } = useContext(AuthContext);
   const router = useRouter();
 
+  // Função para salvar as alterações do usuário
+  const handleSave = () => {
+    // Aqui você pode implementar a lógica de salvar (API, contexto, etc)
+    // Exemplo: alert para feedback
+    alert('Informações salvas com sucesso!');
+  };
+
   const handleLogout = () => {
     logout();
     router.replace('/login');
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
-      </View>
-      <ThemedText type="title" style={styles.title}>Perfil do Usuário</ThemedText>
-      <View style={styles.avatarContainer}>
-        <Image source={{ uri: photo }} style={styles.avatar} />
-        <Button title="Alterar foto" color="#1976D2" onPress={() => {}} />
-      </View>
-      <View style={styles.infoContainer}>
-        <ThemedText type="subtitle" style={styles.label}>Nome de usuário</ThemedText>
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Nome de usuário"
-          placeholderTextColor="#1976D2"
-        />
-        <ThemedText type="subtitle" style={styles.label}>E-mail</ThemedText>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="E-mail"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          placeholderTextColor="#1976D2"
-        />
-      </View>
-      <View style={styles.buttonGroup}>
-        <Button title="Configurações" color="#64B5F6" onPress={() => {}} />
-        <Button title="Preferências" color="#90CAF9" onPress={() => {}} />
-        <Button title="Sair" color="#d32f2f" onPress={handleLogout} />
-      </View>
-    </ThemedView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ThemedView style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image source={require('@/assets/images/PontoFino_Logo.png')} style={styles.logo} />
+        </View>
+        <ThemedText type="title" style={styles.title}>Perfil do Usuário</ThemedText>
+        <View style={styles.avatarContainer}>
+          <Image source={{ uri: photo }} style={styles.avatar} />
+          <Button title="Alterar foto" color="#1976D2" onPress={() => {}} />
+        </View>
+        <View style={styles.infoContainer}>
+          <ThemedText type="subtitle" style={styles.label}>Nome de usuário</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+            placeholder="Nome de usuário"
+            placeholderTextColor="#1976D2"
+          />
+          <ThemedText type="subtitle" style={styles.label}>E-mail</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            placeholderTextColor="#1976D2"
+          />
+        </View>
+        <View style={styles.buttonGroup}>
+          <Button title="Salvar" color="#388E3C" onPress={handleSave} />
+          <Button title="Configurações" color="#64B5F6" onPress={() => {}} />
+          <Button title="Preferências" color="#90CAF9" onPress={() => {}} />
+          <Button title="Sair" color="#d32f2f" onPress={handleLogout} />
+        </View>
+      </ThemedView>
+    </ScrollView>
   );
 }
 
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginBottom: 12,
-    marginTop: 12,
+    marginTop: 75, // aumenta a margem superior do logo
   },
   logo: {
     width: 70,
@@ -143,5 +153,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    marginBottom: 100, // adiciona margem inferior ao grupo de botões
   },
 });
+
